@@ -11,7 +11,6 @@ const int stepsPerRevolution = 2048;  // Most common steppers have 200 steps/rev
 Stepper myStepper(stepsPerRevolution, 13, 14, 15, 26);
 
 char command;
-
 int currentSteps = 0;
 const int stepsIncrement = 256;  // Move 51 steps each press
 
@@ -63,7 +62,7 @@ void moveSteps(char command) {
   if (command == 't' || command == 'T') {
       myStepper.step(stepsIncrement);
       currentSteps += stepsIncrement;
-      
+      currentSteps%= 2048;
       Serial.print("Moved 360 steps. Total steps: ");
       Serial.print(currentSteps);
       Serial.print(" (");
@@ -79,7 +78,7 @@ void moveSteps(char command) {
 
 void resetPosition() {
   // Move back to zero position
-  myStepper.step(-currentSteps);
+  myStepper.step((8*256)-currentSteps);
   releaseMotor();
   currentSteps = 0;
   Serial.println("Reset to position 0");
