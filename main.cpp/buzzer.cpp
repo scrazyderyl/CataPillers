@@ -6,8 +6,6 @@
 #include <Stepper.h>
 #include "buzzer.h"
 
-
-
 void buzzer(char command){
    switch(command) {
       case '1':
