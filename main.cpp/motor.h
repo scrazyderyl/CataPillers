@@ -1,5 +1,3 @@
-void motor(char command);
-void setup();
-void loop();
+void moveTo(int capsule);
 void buzzer(char command);
-void resetPosition() ;
+void resetPosition();

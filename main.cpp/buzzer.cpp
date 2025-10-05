@@ -3,8 +3,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <Stepper.h>
 #include "buzzer.h"
+#include <Arduino.h>
+#include <Wire.h>
 
 void buzzer(char command){
    switch(command) {
@@ -17,9 +18,7 @@ void buzzer(char command){
       case '3':
         playMelody();
         break;
-}
-
-    releaseMotor();
+  }
 }
 
 
@@ -43,11 +42,4 @@ void playMelody() {
     tone(BUZZER_PIN, melody[i], noteDurations);
     delay(noteDurations + 50);
   }
-}
-
-void releaseMotor() {
-  digitalWrite(13, LOW);
-  digitalWrite(14, LOW);
-  digitalWrite(15, LOW);
-  digitalWrite(25, LOW);
 }

@@ -1,11 +1,10 @@
-#define BUZZER_PIN 25  // choose a free pin for your buzzer
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <Stepper.h>
-
-
+#include <Arduino.h>
+#include <Wire.h>
 
 const int stepsPerRevolution = 2048;  // Most common steppers have 200 steps/revolution
 
@@ -17,13 +16,19 @@ char command;
 int currentSteps = 0;
 const int stepsIncrement = 256;  // Move 51 steps each press
 
-void motor(int capsule){
-  
-  resetPosition();
-  for(int i = 0; i < capsule; i++){
-    moveSteps('t');
-    delay(300)
-  }
+void releaseMotor() {
+  digitalWrite(13, LOW);
+  digitalWrite(14, LOW);
+  digitalWrite(15, LOW);
+  digitalWrite(25, LOW);
+}
+
+void resetPosition() {
+  // Move back to zero position
+  myStepper.step(2048 - currentSteps);
+  releaseMotor();
+  currentSteps = 0;
+  Serial.println("Reset to position 0");
 }
 
 void moveSteps(char command) {
@@ -46,17 +51,11 @@ void moveSteps(char command) {
   
 }
 
-void resetPosition() {
-  // Move back to zero position
-  myStepper.step(2048 - currentSteps);
-  releaseMotor();
-  currentSteps = 0;
-  Serial.println("Reset to position 0");
-}
-
-void releaseMotor() {
-  digitalWrite(13, LOW);
-  digitalWrite(14, LOW);
-  digitalWrite(15, LOW);
-  digitalWrite(25, LOW);
+void moveTo(int capsule){
+  
+  resetPosition();
+  for(int i = 0; i < capsule; i++){
+    moveSteps('t');
+    delay(300);
+  }
 }

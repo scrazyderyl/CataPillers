@@ -23,7 +23,7 @@ BLYNK_WRITE(V0)
   int value = param.asInt();
   
   // Rotate to position
-  
+  moveTo(value);
 }
 
 BLYNK_CONNECTED()
